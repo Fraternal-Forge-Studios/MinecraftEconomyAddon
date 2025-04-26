@@ -1,0 +1,53 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Minecraft Economy",
+    "description": "Adds a resource economy to minecraft",
+    "uuid": "77037ec3-3a9b-4063-8913-ab8a6da46f0b",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      21,
+      70
+    ]
+  },
+  "modules": [
+    {
+      "description": "Script resources",
+      "language": "javascript",
+      "type": "script",
+      "uuid": "10ee8ccf-007c-42f3-b73e-c87771952d23",
+      "version": [
+        1,
+        0,
+        0
+      ],
+      "entry": "scripts/main.js"
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.0.0"
+    },
+    {
+      "uuid": "e9d490b0-9b06-4266-b1ae-04e5a26acb0d",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "metadata": {
+    "generated_with": {
+      "mctoolscli": [
+        "0.10.0"
+      ]
+    }
+  }
+}

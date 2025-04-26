@@ -1,0 +1,40 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Minecraft Economy",
+    "description": "Adds a resource economy to minecraft",
+    "uuid": "e9d490b0-9b06-4266-b1ae-04e5a26acb0d",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      21,
+      70
+    ]
+  },
+  "modules": [
+    {
+      "description": "My Resource Pack",
+      "type": "resources",
+      "uuid": "76d5b474-bdc8-494d-b424-d7bca4512fb7",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "dependencies": [
+   
+  ],
+  "metadata": {
+    "generated_with": {
+      "mctoolscli": [
+        "0.10.0"
+      ]
+    }
+  }
+}

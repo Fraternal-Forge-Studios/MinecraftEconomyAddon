@@ -1,0 +1,3 @@
+enum BlockTypes {
+    CHEST = "chest"
+}
