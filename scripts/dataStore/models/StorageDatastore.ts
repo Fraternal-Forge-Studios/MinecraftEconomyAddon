@@ -1,5 +1,5 @@
 import { ListBlockVolume, Vector3, world } from "@minecraft/server";
-import { DataStore } from "../Datastore";
+import { DataStore } from "../BaseDatastore";
 
 export class StorageLocations extends DataStore {
   /**
