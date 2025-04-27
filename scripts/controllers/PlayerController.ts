@@ -1,5 +1,8 @@
 import { EntityInventoryComponent, Player, world } from "@minecraft/server";
 
+/**
+ * This controller handles operations involviong players inside the world
+ */
 export class PlayerController {
   private _currentPlayers: Player[];
 
@@ -7,6 +10,11 @@ export class PlayerController {
     this._currentPlayers = world.getAllPlayers();
   }
 
+  /**
+   * 
+   * @returns 
+   * Returns array of block type ids from players' inventories
+   */
   public scanInventories(): string[] {
     let updatedKnownBlocks: string[] = [];
     for (let player of this._currentPlayers) {
@@ -27,6 +35,9 @@ export class PlayerController {
     return updatedKnownBlocks;
   }
 
+  /**
+   * Refreshes the internal field that tracks current players in world
+   */
   public refreshCache() {
     this._currentPlayers = world.getAllPlayers();
   }
