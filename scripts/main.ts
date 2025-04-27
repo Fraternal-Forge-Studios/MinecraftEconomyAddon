@@ -1,9 +1,11 @@
-import { world, system, EntityInventoryComponent, PlayerPlaceBlockAfterEvent, Vector3, BlockVolume, BlockPermutation, Player, Dimension, Block, BlockInventoryComponent } from "@minecraft/server";
+import { world, system, EntityInventoryComponent, Vector3, BlockVolume, Dimension, BlockInventoryComponent } from "@minecraft/server";
 import { MinecraftBlockTypes, MinecraftDimensionTypes } from "@minecraft/vanilla-data";
 import { arrayUnique } from "./helpers/Utilities";
+import { StorageLocations } from "./dataStore/models/StorageDatastore";
 
 const ADDON_DEBUG = true;
 const SEARCH_VOLUME_DELTA = 250;
+const INITIALIZE_DELAY = 100;
 const SHORT_WORKLOAD_TIME = 250;
 const LONG_WORKLOAD_TIME = 1000;
 
@@ -11,12 +13,13 @@ let ticksSinceLoad = 0;
 let chestLocations: Vector3[] = [];
 let storageTypes: string[] = [];
 let once = true;
+const storageDatastore = new StorageLocations();
 
 function mainTick() {
   // Keep track of in game time ticks
   ticksSinceLoad++;
   
-  if (ticksSinceLoad % SHORT_WORKLOAD_TIME == 0 && once) {
+  if (ticksSinceLoad % INITIALIZE_DELAY == 0 && once) {
     once = false
     world.sendMessage("Initializing economy...")
     initialize();
@@ -43,6 +46,10 @@ function mainTick() {
         currentEconomy[item] += 1;
       } else {
         currentEconomy[item] = 1;
+      }
+
+      if (ADDON_DEBUG) {
+        world.sendMessage(`${JSON.stringify(world.getDynamicPropertyIds())}`)
       }
     }
 
@@ -78,9 +85,10 @@ function findChests() {
       }, 
       true);
     for (let chest of chests.getBlockLocationIterator()) {
-      foundChests.push(chest);      
+      foundChests.push(chest);   
     }
   }
+  storageDatastore.saveLocations(foundChests);
   return arrayUnique(chestLocations, foundChests);
 }
 
@@ -176,58 +184,23 @@ function scanInventories() {
   return updatedKnownBlocks;
 }
 
-function playerPlaceBlockAfterCallback(event: PlayerPlaceBlockAfterEvent) {
-  console.log("Block placed!");
-}
-
-function saveChestData(x: number, y: number, z: number) {
-  let savedChestData = readSaveData("chest-location");
-  if (savedChestData !== undefined) {
-    try {
-      let chestData = <Vector3[]> JSON.parse(savedChestData as string);
-      let locationObj = { x: x, y: y, z: z } as Vector3;
-
-      if (!chestData.includes(locationObj)) {
-        chestData.push(locationObj);
-        saveData("chest-location", JSON.stringify(chestData));
-      } 
-    } catch (error) {
-      console.error(error);
-    }
-  }
-}
-
-function readChestData() {
-  let savedChestData = world.getDynamicProperty("chest-location");
-
-  if (savedChestData !== undefined) {
-    try {
-      let chests = JSON.parse(savedChestData as string);
-
-      chestLocations = chests;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-}
-
-function readSaveData(key: string) {
-  return world.getDynamicProperty(`minecraft-economy:${key}`);
-}
-
-function saveData(key: string, data: string) {
-  world.setDynamicProperty(`minecraft-economy:${key}`, data);
-}
-
 function initialize() {
-  // Load local data if any
-  // chestLocations = readSaveData("chestLocations.json");
+  // Calculate which Minecraft Block Types are storage blocks
   let now = new Date();
   world.sendMessage(`Start storage block scanning: ${now}`)
   storageTypes = getStorageBlocks();
   now = new Date();
   world.sendMessage(`End storage block scanning: ${now}`)
-  //world.afterEvents.playerPlaceBlock.subscribe(playerPlaceBlockAfterCallback)
+
+  // Load saved chest location data if there is any
+  world.sendMessage(`Starting load saved chest locations: ${now}`)
+  let savedLocations = storageDatastore.getStorageLocations();
+  if (savedLocations !== undefined) {
+    chestLocations = savedLocations;
+    world.sendMessage(`Chests loaded: ${JSON.stringify(chestLocations)}`)
+  }
+  now = new Date();
+  world.sendMessage(`End load saved chest locations: ${now}`)
   world.sendMessage(`${JSON.stringify(storageTypes)}`);
 }
 
