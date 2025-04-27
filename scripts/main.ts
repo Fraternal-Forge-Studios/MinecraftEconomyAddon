@@ -3,7 +3,6 @@ import { StorageBlockController } from "./controllers/StorageBlockController";
 import { PlayerController } from "./controllers/PlayerController";
 
 const ADDON_DEBUG = true;
-
 const INITIALIZE_DELAY = 100;
 const SHORT_WORKLOAD_TIME = 250;
 const LONG_WORKLOAD_TIME = 1000;
@@ -47,6 +46,10 @@ function mainTick() {
       } else {
         currentEconomy[item] = 1;
       }
+
+      if (ADDON_DEBUG) {
+        world.sendMessage(`${JSON.stringify(world.getDynamicPropertyIds())}`)
+      }
     }
 
     if (ADDON_DEBUG) {
@@ -64,6 +67,7 @@ function mainTick() {
 
   system.run(mainTick);
 }
+
 
 function initialize() {
   world.sendMessage(`${JSON.stringify("INITIALIZE")}`);
