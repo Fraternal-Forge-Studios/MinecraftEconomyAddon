@@ -21,10 +21,10 @@ export class DataStore {
     if (data.length > this.DYNAMIC_PROPERTY_SIZE_LIMIT) {
       let dataChunks = this.shardData(data);
       for (let i = 0; i < dataChunks.length; i++) {
-        world.setDynamicProperty(`${this.DATASTORE_KEY}:${key}:${i}`);
+        world.setDynamicProperty(`${key}:${i}`, dataChunks[i]);
       }
     } else {
-      world.setDynamicProperty(`${this.DATASTORE_KEY}:${key}:0`, data);
+      world.setDynamicProperty(`${key}:0`, data);
     }
   }
 
@@ -37,7 +37,7 @@ export class DataStore {
    * Returns string representation of object stored in the dynamic property 
    */
   protected getData(key: string): string | undefined {
-    let shardKeys = this.getDataShards(`${this.DATASTORE_KEY}:${key}`);
+    let shardKeys = this.getDataShards(key);
     let resultString = '';
     for (let shardKey of shardKeys) {
       let shardedResult = world.getDynamicProperty(shardKey);

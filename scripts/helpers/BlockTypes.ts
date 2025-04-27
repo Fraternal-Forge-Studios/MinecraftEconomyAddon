@@ -1,3 +1,0 @@
-enum BlockTypes {
-    CHEST = "chest"
-}
