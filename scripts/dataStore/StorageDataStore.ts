@@ -9,10 +9,16 @@ export class StorageDataStore extends DataStore {
     this._currentLocations = this.getStorageLocations() ? []: [];
   }
 
+  /**
+   * Returns the locations currently in datastore
+   */
   public get currentLocations() {
     return this._currentLocations;
   }
 
+  /**
+   * Refreshes the cached locations inside the datastore
+   */
   public resfreshCache() {
     this._currentLocations = this.getStorageLocations() ? []: [];
   }

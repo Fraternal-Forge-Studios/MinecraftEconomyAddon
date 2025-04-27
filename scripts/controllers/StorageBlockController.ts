@@ -3,6 +3,9 @@ import { StorageDataStore } from '../dataStore/StorageDataStore';
 import { MinecraftBlockTypes, MinecraftDimensionTypes } from '@minecraft/vanilla-data';
 import { arrayUnique } from '../helpers/Utilities';
 
+/**
+ * Controller responsible for interacting with storage blocks
+ */
 export class StorageBlockController {
   private _SEARCH_VOLUME_DELTA = 250;
   private _dataStore: StorageDataStore;
@@ -15,10 +18,18 @@ export class StorageBlockController {
     this._storageBlockTypes = this.getStorageBlockTypes();
   }
 
+  /**
+   * Gets currently found chest locations
+   */
   public get currentLocations() {
     return this._currentLocations;
   }
 
+  /**
+   * 
+   * @returns 
+   * Returns list of block type ids of block inside known storage blocks
+   */
   public scanStorageBlocks(): string[] {
     let overworld = world.getDimension(MinecraftDimensionTypes.Overworld);
     let chestBlocks = [];
@@ -91,7 +102,11 @@ export class StorageBlockController {
     return storageBlocks
   }
 
-  public findNewStorageBlocks() {
+
+  /**
+   * Updates the internal field that defines all storage type blocks in minecraft
+   */
+  public findNewStorageBlocks(): void {
     let worldDimension = world.getDimension(MinecraftDimensionTypes.Overworld);
     // get players' location in order to calculate search radius
     let players = world.getAllPlayers();
