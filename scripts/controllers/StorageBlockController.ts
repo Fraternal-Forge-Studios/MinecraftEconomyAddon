@@ -26,7 +26,6 @@ export class StorageBlockController {
    */
   public get currentLocations() {
     return this._currentLocations;
-    
   }
 
   /**
