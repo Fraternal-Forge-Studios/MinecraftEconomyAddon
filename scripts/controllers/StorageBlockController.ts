@@ -2,6 +2,7 @@ import { BlockInventoryComponent, BlockVolume, Dimension, Vector3, world } from 
 import { StorageDataStore } from '../dataStore/StorageDataStore';
 import { MinecraftBlockTypes, MinecraftDimensionTypes } from '@minecraft/vanilla-data';
 import { arrayUnique } from '../helpers/Utilities';
+import { PlayerController } from './PlayerController';
 
 /**
  * Controller responsible for interacting with storage blocks
@@ -11,11 +12,13 @@ export class StorageBlockController {
   private _dataStore: StorageDataStore;
   private _storageBlockTypes: string[];
   private _currentLocations: Vector3[];
+  private _playerController: PlayerController;
 
   constructor() {
     this._dataStore = new StorageDataStore();
-    this._currentLocations = this._dataStore.currentLocations;
+    this._currentLocations = this._dataStore.getStorageLocations() || [];
     this._storageBlockTypes = this.getStorageBlockTypes();
+    this._playerController = new PlayerController();
   }
 
   /**
@@ -66,11 +69,12 @@ export class StorageBlockController {
   public getStorageBlockTypes() {
     let storageBlocks:string[] = [];
     let overworld: Dimension = world.getDimension(MinecraftDimensionTypes.Overworld);
-    let player = world.getAllPlayers()[0];
+    let player = world.getPlayers()[0];
     let formerTestBlock;
     let formerBedrockBlock;
-    let bedrockBlockLocation: Vector3 = { x: player.location.x + 5, y: overworld.heightRange.max - 2, z: player.location.z + 5}
+    let bedrockBlockLocation: Vector3 = { x: player.location.x + 5, y: overworld.heightRange.max - 2, z: player.location.z + 5};
     let testBoxLocation: Vector3 = { x: bedrockBlockLocation.x , y: overworld.heightRange.max - 1 , z: bedrockBlockLocation.z};
+
     formerBedrockBlock = overworld.getBlock(bedrockBlockLocation)?.typeId;
     formerTestBlock = overworld.getBlock(testBoxLocation)?.typeId;
     overworld.setBlockType(bedrockBlockLocation, MinecraftBlockTypes.Bedrock);

@@ -29,7 +29,6 @@ export class StorageDataStore extends DataStore {
    * List of chest locations to save to dynamic property
    */
   public saveLocations(chestLocations: Vector3[]): void {
-    world.sendMessage(`SAVING CHEST LOCATIONS`);
     let searchKey = `${this.DATASTORE_KEY}:chest-locations`;
     let currentLocationsString = world.getDynamicProperty(searchKey);
     let locationsToSave = chestLocations;
@@ -47,11 +46,10 @@ export class StorageDataStore extends DataStore {
           }
         }
       } catch(error) {
-        world.sendMessage(`${JSON.stringify(error)}`);
+        console.error(`${JSON.stringify(error)}`);
       }
     }
     this.saveData(searchKey, JSON.stringify(locationsToSave));
-    world.sendMessage(`CHEST LOCATIONS SAVED`);
   }
 
   /**
@@ -66,9 +64,8 @@ export class StorageDataStore extends DataStore {
     if (resultString !== undefined) {
       try {
         chestLocationsResult = JSON.parse(resultString.toString());
-        world.sendMessage(`CHESTS LOADED: ${JSON.stringify(chestLocationsResult)}`);
       } catch(error) {
-        world.sendMessage(`ERROR: ${JSON.stringify(error)}`);
+        console.error(`${JSON.stringify(error)}`);
       }
     }
 
