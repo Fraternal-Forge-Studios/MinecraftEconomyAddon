@@ -1,15 +1,13 @@
 import { ListBlockVolume, Vector3, world } from "@minecraft/server";
+import { DataStore } from "../Datastore";
 
-export class DataStore {
-  private DATASTORE_KEY: string = "minecraft-economy";
-  constructor() {}
-
+export class StorageLocations extends DataStore {
   /**
    * 
    * @param chestLocations 
    * List of chest locations to save to dynamic property
    */
-  public saveChestLocations(chestLocations: Vector3[]): void {
+  public saveLocations(chestLocations: Vector3[]): void {
     world.sendMessage(`SAVING CHEST LOCATIONS`);
     let searchKey = `${this.DATASTORE_KEY}:chest-locations`;
     let currentLocationsString = world.getDynamicProperty(searchKey);
@@ -54,34 +52,5 @@ export class DataStore {
     }
 
     return chestLocationsResult;
-  }
-
-  /**
-   * 
-   * @param key 
-   * Key used to store data from dynamic properties. Appended to DATASTORE_KEY
-   * 
-   * @param data 
-   * String representation of object wanting to be stored
-   */
-  private saveData(key: string, data: string): void {
-    world.setDynamicProperty(`${this.DATASTORE_KEY}:${key}`, data);
-  }
-
-  /**
-   * 
-   * @param key 
-   * Key used to retrieve data from dynamic properties. Appended to DATASTORE_KEY
-   * 
-   * @returns
-   * Returns string representation of object stored in the dynamic property 
-   */
-  private getData(key: string): string | undefined {
-    let result = undefined;
-    let resultString = world.getDynamicProperty(`${this.DATASTORE_KEY}:${key}`);
-    if (resultString !== undefined) {
-      result = resultString.toString();
-    }
-    return result;
   }
 }

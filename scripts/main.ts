@@ -1,7 +1,7 @@
-import { world, system, EntityInventoryComponent, PlayerPlaceBlockAfterEvent, Vector3, BlockVolume, BlockPermutation, Player, Dimension, Block, BlockInventoryComponent } from "@minecraft/server";
+import { world, system, EntityInventoryComponent, Vector3, BlockVolume, Dimension, BlockInventoryComponent } from "@minecraft/server";
 import { MinecraftBlockTypes, MinecraftDimensionTypes } from "@minecraft/vanilla-data";
 import { arrayUnique } from "./helpers/Utilities";
-import { DataStore } from "./dataStore/Database";
+import { StorageLocations } from "./dataStore/models/StorageDatastore";
 
 const ADDON_DEBUG = true;
 const SEARCH_VOLUME_DELTA = 250;
@@ -13,7 +13,7 @@ let ticksSinceLoad = 0;
 let chestLocations: Vector3[] = [];
 let storageTypes: string[] = [];
 let once = true;
-const db = new DataStore();
+const storageDatastore = new StorageLocations();
 
 function mainTick() {
   // Keep track of in game time ticks
@@ -88,7 +88,7 @@ function findChests() {
       foundChests.push(chest);   
     }
   }
-  db.saveChestLocations(foundChests);
+  storageDatastore.saveLocations(foundChests);
   return arrayUnique(chestLocations, foundChests);
 }
 
@@ -194,7 +194,7 @@ function initialize() {
 
   // Load saved chest location data if there is any
   world.sendMessage(`Starting load saved chest locations: ${now}`)
-  let savedLocations = db.getStorageLocations();
+  let savedLocations = storageDatastore.getStorageLocations();
   if (savedLocations !== undefined) {
     chestLocations = savedLocations;
     world.sendMessage(`Chests loaded: ${JSON.stringify(chestLocations)}`)
