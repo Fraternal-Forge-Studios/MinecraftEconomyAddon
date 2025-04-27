@@ -67,6 +67,7 @@ export class StorageBlockController {
    * @returns list of minecraft block types that can contain items
    */
   public getStorageBlockTypes() {
+    // Setup initial variables
     let storageBlocks:string[] = [];
     let overworld: Dimension = world.getDimension(MinecraftDimensionTypes.Overworld);
     let player = world.getPlayers()[0];
@@ -75,6 +76,7 @@ export class StorageBlockController {
     let bedrockBlockLocation: Vector3 = { x: player.location.x + 5, y: overworld.heightRange.max - 2, z: player.location.z + 5};
     let testBoxLocation: Vector3 = { x: bedrockBlockLocation.x , y: overworld.heightRange.max - 1 , z: bedrockBlockLocation.z};
 
+    // Grab block types so we can change tthem back
     formerBedrockBlock = overworld.getBlock(bedrockBlockLocation)?.typeId;
     formerTestBlock = overworld.getBlock(testBoxLocation)?.typeId;
     overworld.setBlockType(bedrockBlockLocation, MinecraftBlockTypes.Bedrock);
@@ -92,7 +94,7 @@ export class StorageBlockController {
       if (testBlock !== undefined) {
         // Get test block's inventory component
         let testInventory = testBlock.getComponent("inventory");
-        // Check to see if inventory comonent exists. If it does it is storage
+        // Check to see if inventory component exists. If it does it is storage
         if (testInventory !== undefined) {
           storageBlocks.push(testBlock.typeId);
         }
