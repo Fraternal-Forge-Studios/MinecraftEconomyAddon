@@ -1,17 +1,20 @@
-import { world, system } from "@minecraft/server";
+import { system } from "@minecraft/server";
 import { StorageBlockController } from "./controllers/StorageBlockController";
 import { PlayerController } from "./controllers/PlayerController";
+import { Logger } from "./helpers/Logger";
 
 const ADDON_DEBUG = true;
-
-const INITIALIZE_DELAY = 100;
+const INITIALIZE_DELAY = 150;
 const SHORT_WORKLOAD_TIME = 250;
 const LONG_WORKLOAD_TIME = 1000;
 
+const logger = new Logger("ME-Main");
+
 let ticksSinceLoad = 0;
 let once = true;
-let storageBlockController: StorageBlockController = new StorageBlockController();
-let playerController: PlayerController = new PlayerController();
+
+let storageBlockController: StorageBlockController;
+let playerController: PlayerController;
 
 function mainTick() {
   // Keep track of in game time ticks
@@ -20,16 +23,17 @@ function mainTick() {
   // Runs every time the addon is loaded once after a set delay
   if (ticksSinceLoad % INITIALIZE_DELAY == 0 && once) {
     once = false
-    world.sendMessage("Initializing economy...")
+    logger.log("Initializing economy")
     initialize();
   } 
 
   // Frequent workloads
   if (ticksSinceLoad % SHORT_WORKLOAD_TIME == 0) {
-    world.sendMessage("Scanning for economy...")
+    logger.log("Scanning for economy")
     let currentEconomy: { [id: string]: number } = {};
 
     // Scan storage known storage blocks for inventory
+    logger.log("Scanning known storage blocks")
     let itemsInStorageBlocks = storageBlockController.scanStorageBlocks();
     for (let item of itemsInStorageBlocks) {
       if (item in currentEconomy) {
@@ -40,6 +44,7 @@ function mainTick() {
     }
 
     // Scan players inventories
+    logger.log("Scanning known player inventories")
     let itemsInPlayerInventories = playerController.scanInventories();
     for (let item of itemsInPlayerInventories) {
       if (item in currentEconomy) {
@@ -50,13 +55,13 @@ function mainTick() {
     }
 
     if (ADDON_DEBUG) {
-      world.sendMessage(`Blocks in economy: ${JSON.stringify(currentEconomy, null, 4)}`)
+      logger.log(`Blocks in economy: ${JSON.stringify(currentEconomy, null, 4)}`)
     }
   }
 
   // Infrequent worloads
   if (ticksSinceLoad % LONG_WORKLOAD_TIME == 0) {
-    world.sendMessage("Scanning for storage blocks...")
+    logger.log("Searching for new storage blocks")
 
     // Find and scan chests
     storageBlockController.findNewStorageBlocks();
@@ -66,7 +71,8 @@ function mainTick() {
 }
 
 function initialize() {
-  world.sendMessage(`${JSON.stringify("INITIALIZE")}`);
+  storageBlockController = new StorageBlockController();
+  playerController = new PlayerController();
 }
 
 system.run(mainTick);

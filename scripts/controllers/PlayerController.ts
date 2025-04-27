@@ -10,6 +10,10 @@ export class PlayerController {
     this._currentPlayers = world.getAllPlayers();
   }
 
+  public get currentPlayers() {
+    return this._currentPlayers;
+  }
+
   /**
    * 
    * @returns 
@@ -32,6 +36,7 @@ export class PlayerController {
         }
       }   
     }
+    this.refreshCache();
     return updatedKnownBlocks;
   }
 
