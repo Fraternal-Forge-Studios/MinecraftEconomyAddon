@@ -15,8 +15,8 @@ export class PlayerController {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    * Returns array of block type ids from players' inventories
    */
   public scanInventories(): string[] {
@@ -31,10 +31,10 @@ export class PlayerController {
           if (invItem !== undefined) {
             for (let i = 0; i < invItem.amount; i++) {
               updatedKnownBlocks.push(invItem.typeId);
-            }          
+            }
           }
         }
-      }   
+      }
     }
     this.refreshCache();
     return updatedKnownBlocks;
@@ -47,4 +47,3 @@ export class PlayerController {
     this._currentPlayers = world.getAllPlayers();
   }
 }
-

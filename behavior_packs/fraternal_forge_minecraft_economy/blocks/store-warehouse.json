@@ -1,0 +1,58 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:block": {
+        "description": {
+            "identifier": "minecraft-economy:store-warehouse",
+            "menu_category": {
+              "category": "items",
+              "group": "itemGroup.name.chest"
+            },
+            "states": {
+                "store_warehouse:is_open": [true, false]
+            },
+            "traits": {
+
+            }
+        },
+        "components": {
+            "minecraft:geometry": "geometry.store_warehouse",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "store_warehouse",
+                    "render_method": "opaque"
+                }
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 2.5
+            },
+            "minecraft:light_dampening": 10,
+            "minecraft:collision_box": {
+                "size": [
+                    14,
+                    14,
+                    14
+                ],
+                "origin": [
+                    -7,
+                    0,
+                    -7
+                ]
+            },
+            "minecraft:selection_box": {
+                "size": [
+                    14,
+                    14,
+                    14
+                ],
+                "origin": [
+                    -7,
+                    0,
+                    -7
+                ]
+            }
+        },
+        "permutations": [
+            
+        ]
+    }
+}

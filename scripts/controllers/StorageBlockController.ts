@@ -1,8 +1,8 @@
-import { BlockInventoryComponent, BlockVolume, Dimension, Vector3, world } from '@minecraft/server';
-import { StorageDataStore } from '../dataStore/StorageDataStore';
-import { MinecraftBlockTypes, MinecraftDimensionTypes } from '@minecraft/vanilla-data';
-import { arrayUnique } from '../helpers/Utilities';
-import { PlayerController } from './PlayerController';
+import { BlockInventoryComponent, BlockVolume, Dimension, Vector3, world } from "@minecraft/server";
+import { StorageDataStore } from "../dataStore/StorageDataStore";
+import { MinecraftBlockTypes, MinecraftDimensionTypes } from "@minecraft/vanilla-data";
+import { arrayUnique } from "../helpers/Utilities";
+import { PlayerController } from "./PlayerController";
 
 /**
  * Controller responsible for interacting with storage blocks
@@ -29,8 +29,8 @@ export class StorageBlockController {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    * Returns list of block type ids of block inside known storage blocks
    */
   public scanStorageBlocks(): string[] {
@@ -49,45 +49,53 @@ export class StorageBlockController {
                 for (let i = 0; i < inventoryItem.amount; i++) {
                   chestBlocks.push(inventoryItem.typeId);
                 }
-              } 
+              }
             }
           }
         }
       }
-    }  
+    }
     return chestBlocks;
   }
 
   /**
    * Returns list of minecraft block types that can contain items (Storage Blocks)
-   * 
+   *
    * @remarks
    * This function creates and destroys blocks
-   * 
+   *
    * @returns list of minecraft block types that can contain items
    */
   public getStorageBlockTypes() {
     // Setup initial variables
-    let storageBlocks:string[] = [];
+    let storageBlocks: string[] = [];
     let overworld: Dimension = world.getDimension(MinecraftDimensionTypes.Overworld);
     let player = world.getPlayers()[0];
     let formerTestBlock;
     let formerBedrockBlock;
-    let bedrockBlockLocation: Vector3 = { x: player.location.x + 5, y: overworld.heightRange.max - 2, z: player.location.z + 5};
-    let testBoxLocation: Vector3 = { x: bedrockBlockLocation.x , y: overworld.heightRange.max - 1 , z: bedrockBlockLocation.z};
+    let bedrockBlockLocation: Vector3 = {
+      x: player.location.x + 5,
+      y: overworld.heightRange.max - 2,
+      z: player.location.z + 5,
+    };
+    let testBoxLocation: Vector3 = {
+      x: bedrockBlockLocation.x,
+      y: overworld.heightRange.max - 1,
+      z: bedrockBlockLocation.z,
+    };
 
     // Grab block types so we can change tthem back
     formerBedrockBlock = overworld.getBlock(bedrockBlockLocation)?.typeId;
     formerTestBlock = overworld.getBlock(testBoxLocation)?.typeId;
     overworld.setBlockType(bedrockBlockLocation, MinecraftBlockTypes.Bedrock);
-    
+
     // Loop through block types
     for (let blockType in MinecraftBlockTypes) {
       try {
         // Set test block to next block type in enum
         overworld.setBlockType(testBoxLocation, blockType);
-      } catch(error) {
-        continue
+      } catch (error) {
+        continue;
       }
       // Gets the block so we can look for properties
       let testBlock = overworld.getBlock(testBoxLocation);
@@ -105,9 +113,8 @@ export class StorageBlockController {
     overworld.setBlockType(testBoxLocation, formerTestBlock || MinecraftBlockTypes.Air);
     overworld.setBlockType(bedrockBlockLocation, formerBedrockBlock || MinecraftBlockTypes.Air);
 
-    return storageBlocks
+    return storageBlocks;
   }
-
 
   /**
    * Updates the internal field that defines all storage type blocks in minecraft
@@ -119,21 +126,30 @@ export class StorageBlockController {
     let foundChests = [];
 
     for (let player of players) {
-      let searchVolumeTo = { x: player.location.x - this._SEARCH_VOLUME_DELTA, y: worldDimension.heightRange.min, z: player.location.z - this._SEARCH_VOLUME_DELTA } as Vector3;
-      let searchVolumeFrom = { x: player.location.x + this._SEARCH_VOLUME_DELTA, y: worldDimension.heightRange.max, z: player.location.z + this._SEARCH_VOLUME_DELTA } as Vector3;
+      let searchVolumeTo = {
+        x: player.location.x - this._SEARCH_VOLUME_DELTA,
+        y: worldDimension.heightRange.min,
+        z: player.location.z - this._SEARCH_VOLUME_DELTA,
+      } as Vector3;
+      let searchVolumeFrom = {
+        x: player.location.x + this._SEARCH_VOLUME_DELTA,
+        y: worldDimension.heightRange.max,
+        z: player.location.z + this._SEARCH_VOLUME_DELTA,
+      } as Vector3;
       let searchVolume = new BlockVolume(searchVolumeFrom, searchVolumeTo);
       let chests = worldDimension.getBlocks(
-        searchVolume, 
-        { 
-          includeTypes: this._storageBlockTypes
-        }, 
-        true);
+        searchVolume,
+        {
+          includeTypes: this._storageBlockTypes,
+        },
+        true
+      );
       for (let chest of chests.getBlockLocationIterator()) {
-        foundChests.push(chest);   
+        foundChests.push(chest);
       }
     }
     this._dataStore.saveLocations(foundChests);
-    
-    this._currentLocations =  arrayUnique(this._currentLocations, foundChests);
+
+    this._currentLocations = arrayUnique(this._currentLocations, foundChests);
   }
 }

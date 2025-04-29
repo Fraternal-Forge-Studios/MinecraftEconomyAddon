@@ -1,32 +1,33 @@
 {
   "name": "minecraft-economy",
   "version": "0.1.0",
-  "productName": "Minecraft TypeScript Starter Project",
-  "description": "Adds a resource economy to minecraft",
+  "productName": "Minecraft Economy",
+  "description": "Addes stores, store warehouses, resource market, and more to minecraft!",
   "private": true,
   "devDependencies": {
     "@minecraft/core-build-tasks": "^4.0.0",
     "@types/node": "^22.15.2",
     "@types/sqlite3": "^3.1.11",
-    "eslint-plugin-minecraft-linting": "^2.0.1",
+    "eslint-plugin-minecraft-linting": "^2.0.4",
+    "prettier": "^3.5.3",
     "source-map": "^0.7.4",
     "ts-node": "^10.9.1",
     "typescript": "^5.5.4"
   },
   "scripts": {
+    "prettier": "npx prettier scripts/**/*.ts --write",
     "lint": "just-scripts lint",
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "local-deploy": "just-scripts local-deploy",
     "mcaddon": "just-scripts mcaddon",
-    "postinstall": "npm run copy-modules",
-    "copy-modules": "node bin/copy-modules.js",
+    "release": "npm run clean && npm run prettier && npm run lint && npm run build && npm run mcaddon",
     "enablemcloopback": "CheckNetIsolation.exe LoopbackExempt -a -p=S-1-15-2-1958404141-86561845-1752920682-3514627264-368642714-62675701-733520436",
     "enablemcpreviewloopback": "CheckNetIsolation.exe LoopbackExempt -a -p=S-1-15-2-424268864-5579737-879501358-346833251-474568803-887069379-4040235476"
   },
   "dependencies": {
     "@minecraft/math": "^2.0.1",
-    "@minecraft/server": "^1.13.0",
+    "@minecraft/server": "^1.18.0",
     "@minecraft/server-ui": "^1.2.0",
     "@minecraft/vanilla-data": "^1.21.20"
   }

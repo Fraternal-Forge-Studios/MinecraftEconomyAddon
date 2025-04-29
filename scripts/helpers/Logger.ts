@@ -8,16 +8,16 @@ export class Logger {
   }
 
   /**
-   * 
-   * @param severity 
+   *
+   * @param severity
    * What severity level to translate
-   * 
-   * @returns 
+   *
+   * @returns
    * Returns human readable version of severity level
    */
   private translateSeverity(severity: number): string {
     let severityText = "";
-    switch(severity) {
+    switch (severity) {
       case 0: {
         severityText = "ERROR";
         break;
@@ -43,11 +43,11 @@ export class Logger {
   }
 
   /**
-   * 
-   * @param message 
+   *
+   * @param message
    * Message to display as log text
-   * 
-   * @param severity 
+   *
+   * @param severity
    * How severe is the log message
    */
   public log(message: string, severity: number = 2) {

@@ -1,7 +1,6 @@
 import { world } from "@minecraft/server";
 
 export class DataStore {
-
   protected DYNAMIC_PROPERTY_SIZE_LIMIT = 32767;
   protected DATASTORE_KEY: string = "minecraft-economy";
   protected jsonString: string = "";
@@ -10,11 +9,11 @@ export class DataStore {
   constructor() {}
 
   /**
-   * 
-   * @param key 
+   *
+   * @param key
    * Key used to store data from dynamic properties. Appended to DATASTORE_KEY
-   * 
-   * @param data 
+   *
+   * @param data
    * String representation of object wanting to be stored
    */
   protected saveData(key: string, data: string): void {
@@ -29,16 +28,16 @@ export class DataStore {
   }
 
   /**
-   * 
-   * @param key 
+   *
+   * @param key
    * Key used to retrieve data from dynamic properties. Appended to DATASTORE_KEY
-   * 
+   *
    * @returns
-   * Returns string representation of object stored in the dynamic property 
+   * Returns string representation of object stored in the dynamic property
    */
   protected getData(key: string): string | undefined {
     let shardKeys = this.getDataShards(key);
-    let resultString = '';
+    let resultString = "";
     for (let shardKey of shardKeys) {
       let shardedResult = world.getDynamicProperty(shardKey);
       if (shardKey !== undefined) {
@@ -49,37 +48,37 @@ export class DataStore {
   }
 
   /**
-   * 
-   * @param data 
+   *
+   * @param data
    * String represented JSON object that is over the size limit
-   * 
-   * @returns 
+   *
+   * @returns
    * List of chunks of the data provided to fit size limits
    */
   private shardData(data: string): string[] {
     let shardedData: string[] = [];
-    let chunkedData = data.match(new RegExp(`.{1,${this.DYNAMIC_PROPERTY_SIZE_LIMIT}}`, 'g'));
+    let chunkedData = data.match(new RegExp(`.{1,${this.DYNAMIC_PROPERTY_SIZE_LIMIT}}`, "g"));
     if (chunkedData != null) {
-      shardedData = this.DYNAMIC_PROPERTY_SIZE_LIMIT > 0 ?  chunkedData: [data];
+      shardedData = this.DYNAMIC_PROPERTY_SIZE_LIMIT > 0 ? chunkedData : [data];
     }
     return shardedData;
   }
 
   /**
-   * 
-   * @param key 
+   *
+   * @param key
    * Key to search for that shards contain.
-   * 
+   *
    * Example:
-   * 
+   *
    *  SHARD 1: minecraft-economy:chest-locations:1
    *  SHARD 2: minecraft-economy:chest-locations:2
-   * 
+   *
    * @returns
-   * List of DynamicPropertyIds that pertain to data key provided 
-   * 
+   * List of DynamicPropertyIds that pertain to data key provided
+   *
    * @remarks
-   * This sharding technique is so we can get past the size 
+   * This sharding technique is so we can get past the size
    * constraints given to world dynamic properties
    */
   private getDataShards(key: string): string[] {

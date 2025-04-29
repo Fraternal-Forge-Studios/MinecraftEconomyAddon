@@ -3,8 +3,8 @@ import { DataStore } from "../BaseDatastore";
 
 export class StorageLocations extends DataStore {
   /**
-   * 
-   * @param chestLocations 
+   *
+   * @param chestLocations
    * List of chest locations to save to dynamic property
    */
   public saveLocations(chestLocations: Vector3[]): void {
@@ -21,11 +21,10 @@ export class StorageLocations extends DataStore {
 
         for (let location of chestLocations) {
           if (!blockVolume.isInside(location)) {
-            
             locationsToSave.push(location);
           }
         }
-      } catch(error) {
+      } catch (error) {
         world.sendMessage(`${JSON.stringify(error)}`);
       }
     }
@@ -34,8 +33,8 @@ export class StorageLocations extends DataStore {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    * Returns a list of Vector3 locations of storage block locations
    */
   public getStorageLocations(): Vector3[] | undefined {
@@ -46,7 +45,7 @@ export class StorageLocations extends DataStore {
       try {
         chestLocationsResult = JSON.parse(resultString.toString());
         world.sendMessage(`CHESTS LOADED: ${JSON.stringify(chestLocationsResult)}`);
-      } catch(error) {
+      } catch (error) {
         world.sendMessage(`ERROR: ${JSON.stringify(error)}`);
       }
     }

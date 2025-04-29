@@ -6,7 +6,7 @@ export class StorageDataStore extends DataStore {
 
   constructor() {
     super();
-    this._currentLocations = this.getStorageLocations() ? []: [];
+    this._currentLocations = this.getStorageLocations() ? [] : [];
   }
 
   /**
@@ -20,12 +20,12 @@ export class StorageDataStore extends DataStore {
    * Refreshes the cached locations inside the datastore
    */
   public resfreshCache() {
-    this._currentLocations = this.getStorageLocations() ? []: [];
+    this._currentLocations = this.getStorageLocations() ? [] : [];
   }
-  
+
   /**
-   * 
-   * @param chestLocations 
+   *
+   * @param chestLocations
    * List of chest locations to save to dynamic property
    */
   public saveLocations(chestLocations: Vector3[]): void {
@@ -41,11 +41,10 @@ export class StorageDataStore extends DataStore {
 
         for (let location of chestLocations) {
           if (!blockVolume.isInside(location)) {
-            
             locationsToSave.push(location);
           }
         }
-      } catch(error) {
+      } catch (error) {
         console.error(`${JSON.stringify(error)}`);
       }
     }
@@ -53,8 +52,8 @@ export class StorageDataStore extends DataStore {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    * Returns a list of Vector3 locations of storage block locations
    */
   public getStorageLocations(): Vector3[] | undefined {
@@ -64,7 +63,7 @@ export class StorageDataStore extends DataStore {
     if (resultString !== undefined) {
       try {
         chestLocationsResult = JSON.parse(resultString.toString());
-      } catch(error) {
+      } catch (error) {
         console.error(`${JSON.stringify(error)}`);
       }
     }
