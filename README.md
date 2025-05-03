@@ -1,7 +1,11 @@
 # Minecraft Economy Addon
 
+[![CodeQL](https://github.com/Fraternal-Forge-Studios/MinecraftEconomyAddon/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Fraternal-Forge-Studios/MinecraftEconomyAddon/actions/workflows/github-code-scanning/codeql)
+[![Dependabot Updates](https://github.com/Fraternal-Forge-Studios/MinecraftEconomyAddon/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/Fraternal-Forge-Studios/MinecraftEconomyAddon/actions/workflows/dependabot/dependabot-updates)
+[![Release Workflow](https://github.com/Fraternal-Forge-Studios/MinecraftEconomyAddon/actions/workflows/release.yml/badge.svg)](https://github.com/Fraternal-Forge-Studios/MinecraftEconomyAddon/actions/workflows/release.yml)
+
 This addon adds an economy for blocks to minecraft.
-It adds a market to buy and sell blocks based on availability of blocks in the world.
+It adds a market to buy and sell blocks based on availability of blocks in the world. It adds a Storefront block, a Store Warehouse block, and a central currency for the game. The game will also have a sort of bank to regulate flow of currency in game.
 
 # Development
 
