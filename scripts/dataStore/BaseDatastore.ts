@@ -2,7 +2,7 @@ import { world } from "@minecraft/server";
 
 export class DataStore {
   protected DYNAMIC_PROPERTY_SIZE_LIMIT = 32767;
-  protected DATASTORE_KEY: string = "minecraft-economy";
+  protected DATASTORE_KEY: string = "minecraft_economy";
   protected jsonString: string = "";
   protected dataObj = undefined;
 
@@ -71,8 +71,8 @@ export class DataStore {
    *
    * Example:
    *
-   *  SHARD 1: minecraft-economy:chest-locations:1
-   *  SHARD 2: minecraft-economy:chest-locations:2
+   *  SHARD 1: minecraft_economy:chest-locations:1
+   *  SHARD 2: minecraft_economy:chest-locations:2
    *
    * @returns
    * List of DynamicPropertyIds that pertain to data key provided

@@ -18,7 +18,6 @@ let playerController: PlayerController;
 
 // Register custom blocks with block registry
 
-
 function main() {
   // Keep track of in game time ticks
   ticksSinceLoad++;
@@ -71,10 +70,6 @@ function frequentWorkloads() {
       currentEconomy[item] += 1;
     } else {
       currentEconomy[item] = 1;
-    }
-
-    if (ADDON_DEBUG) {
-      world.sendMessage(`${JSON.stringify(world.getDynamicPropertyIds())}`);
     }
   }
 

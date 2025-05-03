@@ -4,8 +4,17 @@
   "padding": 8,
   "num_mip_levels": 4,
   "texture_data": {
-    "store_warehouse": {
-      "textures": "textures/blocks/store_warehouse"
+    "store_warehouse_front": {
+      "textures": "textures/blocks/store_warehouse/store_warehouse_front"
+    },
+    "store_warehouse_side": {
+      "textures": "textures/blocks/store_warehouse/store_warehouse_side"
+    },
+    "store_warehouse_top": {
+      "textures": "textures/blocks/store_warehouse/store_warehouse_top"
+    },
+    "store_warehouse_back": {
+      "textures": "textures/blocks/store_warehouse/store_warehouse_back"
     }
   }
 }

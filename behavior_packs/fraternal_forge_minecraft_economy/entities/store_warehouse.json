@@ -2,7 +2,7 @@
   "format_version": "1.21.0",
   "minecraft:entity": {
     "description": {
-      "identifier": "minecraft_economy:store_warehouse",
+      "identifier": "minecraft_economy:store_front",
       "is_experimental": false,
       "is_spawnable": false,
       "is_summonable": true

@@ -10,12 +10,7 @@
       "traits": {}
     },
     "components": {
-      "minecraft:geometry": "geometry.store_warehouse ",
-      "minecraft:material_instances": {
-        "*": {
-          "texture": "store_warehouse"
-        }
-      }
+      "minecraft:geometry": "geometry.store_warehouse"
     },
 
     "permutations": []

@@ -1,6 +1,14 @@
 {
   "format_version": "1.21.0",
   "minecraft_economy:store_warehouse": {
-    "sound": "stone"
+    "sound": "stone",
+    "textures": {
+      "up": "store_warehouse_top",
+      "down": "store_warehouse_side",
+      "north": "store_warehouse_front",
+      "south": "store_warehouse_back",
+      "east": "store_warehouse_side",
+      "west": "store_warehouse_side"
+    }
   }
 }
