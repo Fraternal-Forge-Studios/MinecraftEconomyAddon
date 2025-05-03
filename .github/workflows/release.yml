@@ -1,0 +1,56 @@
+name: Release Workflow
+
+on:
+  pull_request:
+    types:
+      - closed # Trigger only when a pull request is closed
+
+jobs:
+  release:
+    name: Run Release and Upload Artifacts
+    runs-on: ubuntu-latest
+
+    if: github.event.pull_request.merged == true # Ensure the workflow runs only if the pull request is merged
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 22 # Replace with the Node.js version your project requires
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run Release Script
+      run: npm run release
+
+    - name: Upload Release Artifacts
+      id: upload-artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: mcaddon-artifacts
+        path: dist/packages/*.mcaddon
+
+    - name: Create GitHub Release
+      id: create-release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.event.pull_request.head.ref }} # Use the branch name of the merged pull request
+        release_name: Release from PR ${{ github.event.pull_request.number }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Assets
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create-release.outputs.upload_url }}
+        asset_path: dist/packages/*.mcaddon
+        asset_name: ${{ github.event.pull_request.head.ref }}.mcaddon
+        asset_content_type: application/octet-stream
