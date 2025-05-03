@@ -1,4 +1,5 @@
 import { EntityInventoryComponent, Player, world } from "@minecraft/server";
+import { INVENTORY_COMPONENT_NAME } from "../constants/strings";
 
 /**
  * This controller handles operations involviong players inside the world
@@ -22,7 +23,7 @@ export class PlayerController {
   public scanInventories(): string[] {
     let updatedKnownBlocks: string[] = [];
     for (let player of this._currentPlayers) {
-      let playerInventory = player.getComponent("inventory") as EntityInventoryComponent;
+      let playerInventory = player.getComponent(INVENTORY_COMPONENT_NAME) as EntityInventoryComponent;
       let invContainer = playerInventory.container;
       if (invContainer !== undefined) {
         for (let i = 0; i < invContainer.size; i++) {

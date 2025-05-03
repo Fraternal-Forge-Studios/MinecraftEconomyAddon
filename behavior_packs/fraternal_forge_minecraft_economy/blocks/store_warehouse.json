@@ -1,0 +1,23 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "minecraft_economy:store_warehouse",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {},
+      "traits": {}
+    },
+    "components": {
+      "minecraft:geometry": "geometry.store_warehouse",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "store_warehouse"
+        }
+      }
+    },
+
+    "permutations": []
+  }
+}

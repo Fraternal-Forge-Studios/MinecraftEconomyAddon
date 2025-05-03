@@ -1,0 +1,3 @@
+export const ADDON_INITIALIZE_DELAY = 150;
+export const ADDON_SHORT_WORKLOAD_TIME = 250;
+export const ADDON_LONG_WORKLOAD_TIME = 1000;

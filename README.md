@@ -1,8 +1,18 @@
 # Minecraft Economy Addon
-This addon adds an economy for blocks to minecraft. 
+
+This addon adds an economy for blocks to minecraft.
 It adds a market to buy and sell blocks based on availability of blocks in the world.
 
-## Development Setup
+# Development
+
+## Development Resources
+
+- [Comprehensive resource and behavior pack](https://learn.microsoft.com/en-us/minecraft/creator/documents/comprehensivepackcontents?view=minecraft-bedrock-stable)
+- [Minecraft Creator Tools](https://github.com/mojang/minecraft-creator-tools?tab=readme-ov-file)
+- [Bedrock Documentation](https://learn.microsoft.com/en-us/minecraft/creator/?view=minecraft-bedrock-stable)
+- [Bedrock Dev Wiki](https://wiki.bedrock.dev/guide/introduction)
+
+## Setup
 
 ### Install Node.js, if you haven't already
 
@@ -19,21 +29,26 @@ Visit the [Visual Studio Code website](https://code.visualstudio.com) and instal
 ## Getting Started
 
 1. Clone current project with git. This will get you all mods by Fraternal Forge
+
 ```
 git clone https://github.com/Ubiquitouskiwi/fraternal-forge.git
 ```
+
 2. Navigate to the folder. This is the working directory for this Minecraft Addon
+
 ```
 fraternal-forge/Minecraft/MinecraftEconomy
 ```
+
 3. Run NPM to install packages
+
 ```
 npm i
 ```
+
 4. Open project up with Visual Studio Code
 
 ## Testing
-
 
 To get started, go into PowerShell and navigate to your **fraternal-forge/Minecraft/MinecraftEconomy** directory.
 Run this command:

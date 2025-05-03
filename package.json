@@ -1,5 +1,5 @@
 {
-  "name": "minecraft-economy",
+  "name": "minecraft_economy",
   "version": "0.1.0",
   "productName": "Minecraft Economy",
   "description": "Addes stores, store warehouses, resource market, and more to minecraft!",
@@ -28,6 +28,7 @@
   "dependencies": {
     "@minecraft/math": "^2.0.1",
     "@minecraft/server": "^1.18.0",
+    "@minecraft/server-gametest": "^1.0.0-beta.1.21.60-preview.24",
     "@minecraft/server-ui": "^1.2.0",
     "@minecraft/vanilla-data": "^1.21.20"
   }

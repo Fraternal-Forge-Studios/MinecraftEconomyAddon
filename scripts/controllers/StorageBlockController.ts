@@ -3,6 +3,7 @@ import { StorageDataStore } from "../dataStore/StorageDataStore";
 import { MinecraftBlockTypes, MinecraftDimensionTypes } from "@minecraft/vanilla-data";
 import { arrayUnique } from "../helpers/Utilities";
 import { PlayerController } from "./PlayerController";
+import { INVENTORY_COMPONENT_NAME } from "../constants/strings";
 
 /**
  * Controller responsible for interacting with storage blocks
@@ -39,7 +40,7 @@ export class StorageBlockController {
     for (let chest of this._currentLocations) {
       let chestBlock = overworld.getBlock(chest);
       if (chestBlock !== undefined) {
-        let chestInventory = chestBlock.getComponent("inventory") as BlockInventoryComponent;
+        let chestInventory = chestBlock.getComponent(INVENTORY_COMPONENT_NAME) as BlockInventoryComponent;
         if (chestInventory !== undefined) {
           let chestContainer = chestInventory.container;
           if (chestContainer !== undefined) {
@@ -101,7 +102,7 @@ export class StorageBlockController {
       let testBlock = overworld.getBlock(testBoxLocation);
       if (testBlock !== undefined) {
         // Get test block's inventory component
-        let testInventory = testBlock.getComponent("inventory");
+        let testInventory = testBlock.getComponent(INVENTORY_COMPONENT_NAME);
         // Check to see if inventory component exists. If it does it is storage
         if (testInventory !== undefined) {
           storageBlocks.push(testBlock.typeId);

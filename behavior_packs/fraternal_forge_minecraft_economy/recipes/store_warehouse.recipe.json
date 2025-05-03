@@ -1,0 +1,23 @@
+{
+  "format_version": "1.20.0",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "minecraft_economy:store_warehouse"
+    },
+    "tags": ["crafting_table"],
+    "pattern": ["", "#", ""],
+    "key": {
+      "#": {
+        "item": "minecraft:cobblestone"
+      }
+    },
+    "result": {
+      "item": "minecraft_economy:store_warehouse"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:cobblestone"
+      }
+    ]
+  }
+}
