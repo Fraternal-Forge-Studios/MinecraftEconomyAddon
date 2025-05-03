@@ -1,16 +1,12 @@
-name: Release Workflow
+name: Manual Release Workflow
 
 on:
-  pull_request:
-    types:
-      - closed # Trigger only when a pull request is closed
+  workflow_dispatch: # Allows the workflow to be triggered manually
 
 jobs:
   release:
     name: Run Release and Upload Artifacts
     runs-on: ubuntu-latest
-
-    if: github.event.pull_request.merged == true # Ensure the workflow runs only if the pull request is merged
 
     steps:
     - name: Checkout Repository
@@ -40,8 +36,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.event.pull_request.head.ref }} # Use the branch name of the merged pull request
-        release_name: Release from PR ${{ github.event.pull_request.number }}
+        tag_name: manual-release-${{ github.run_id }} # Generates a unique tag for manual releases
+        release_name: Manual Release ${{ github.run_id }}
         draft: false
         prerelease: false
 
@@ -52,5 +48,5 @@ jobs:
       with:
         upload_url: ${{ steps.create-release.outputs.upload_url }}
         asset_path: dist/packages/*.mcaddon
-        asset_name: ${{ github.event.pull_request.head.ref }}.mcaddon
+        asset_name: manual-release-${{ github.run_id }}.mcaddon
         asset_content_type: application/octet-stream
