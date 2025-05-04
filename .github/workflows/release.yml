@@ -1,0 +1,52 @@
+name: Manual Release Workflow
+
+on:
+  workflow_dispatch: # Allows the workflow to be triggered manually
+
+jobs:
+  release:
+    name: Run Release and Upload Artifacts
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 22 # Replace with the Node.js version your project requires
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run Release Script
+      run: npm run release
+
+    - name: Upload Release Artifacts
+      id: upload-artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: mcaddon-artifacts
+        path: dist/packages/*.mcaddon
+
+    - name: Create GitHub Release
+      id: create-release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: manual-release-${{ github.run_id }} # Generates a unique tag for manual releases
+        release_name: Manual Release ${{ github.run_id }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Assets
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create-release.outputs.upload_url }}
+        asset_path: dist/packages/*.mcaddon
+        asset_name: manual-release-${{ github.run_id }}.mcaddon
+        asset_content_type: application/octet-stream
