@@ -10,5 +10,8 @@
       "east": "store_warehouse_side",
       "west": "store_warehouse_side"
     }
+  },
+  "minecraft:storefront": {
+    "sound": "stone"
   }
 }

@@ -2,17 +2,17 @@
   "format_version": "1.20.0",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "minecraft_economy:store_warehouse"
+      "identifier": "minecraft_economy:storefront"
     },
     "tags": ["crafting_table"],
     "pattern": ["   ", " # ", "   "],
     "key": {
       "#": {
-        "item": "minecraft:cobblestone"
+        "item": "minecraft:planks"
       }
     },
     "result": {
-      "item": "minecraft_economy:store_warehouse"
+      "item": "minecraft_economy:storefront"
     },
     "unlock": [
       {
