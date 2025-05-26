@@ -5,7 +5,7 @@
   "description": "Adds a resource economy to minecraft",
   "private": true,
   "devDependencies": {
-    "@minecraft/core-build-tasks": "^5.0.0",
+    "@minecraft/core-build-tasks": "^5.1.0",
     "@types/node": "^22.15.19",
     "@types/sqlite3": "^3.1.11",
     "eslint-plugin-minecraft-linting": "^2.0.4",
