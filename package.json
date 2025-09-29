@@ -6,7 +6,7 @@
   "private": true,
   "devDependencies": {
     "@minecraft/core-build-tasks": "^5.3.1",
-    "@types/node": "^24.2.1",
+    "@types/node": "^24.5.2",
     "@types/sqlite3": "^3.1.11",
     "eslint-plugin-minecraft-linting": "^2.0.5",
     "source-map": "^0.7.6",
